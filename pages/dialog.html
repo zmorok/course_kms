@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Диалог</title>
+  <link rel="stylesheet" href="../assets/css/index.css" />
+  <link rel="stylesheet" href="../assets/css/dialog.css" />
+  <script src="../assets/js/knowledge.js" defer></script>
+  <script src="../assets/js/endings.js" defer></script>
+  <script src="../assets/js/answer-engine.js" defer></script>
+  <script src="../assets/js/dialog.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <a href="../index.html">Титул</a>
+    <a href="./theory.html">Теория</a>
+    <a href="./description.html">Описание</a>
+    <a href="./work-algorithm.html">Принцип работы</a>
+    <a href="./simulator.html">Симулятор</a>
+    <a href="./dialog.html">Диалог</a>
+  </header>
+
+  <main>
+    <h1>Диалоговая база знаний</h1>
+    <div class="dialog-panel">
+      <h2>Вопрос к базе знаний</h2>
+
+      <form class="dialog-form" id="question-form">
+        <label class="dialog-label" for="question-input">Введите вопрос</label>
+        <textarea id="question-input" rows="4" placeholder="Например: Что выполняет резак?"></textarea>
+
+        <div class="dialog-actions">
+          <button type="submit">Получить ответ</button>
+          <button type="button" id="clear-dialog">Очистить</button>
+        </div>
+      </form>
+
+      <div class="dialog-examples" aria-label="Примеры вопросов">
+        <button type="button" data-question="Что является промышленный резак для бумаги?">Что является промышленный
+          резак для бумаги?</button>
+        <button type="button" data-question="Что выполняет резак?">Что выполняет резак?</button>
+        <button type="button" data-question="Где используется промышленный резак?">Где используется промышленный
+          резак?</button>
+        <button type="button" data-question="Что фиксирует прижим?">Что фиксирует прижим?</button>
+      </div>
+
+      <section class="answer-box" id="answer-box" aria-live="polite">
+        <h3>Ответ</h3>
+        <div id="answer-output">Ответ появится здесь.</div>
+      </section>
+
+      <section class="history-box">
+        <h3>История вопросов</h3>
+        <ol id="question-history"></ol>
+      </section>
+    </div>
+  </main>
+</body>
+
+</html>

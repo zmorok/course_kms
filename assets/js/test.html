@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тесты поиска ответа</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #eef2f6;
+      --panel: #ffffff;
+      --panel-soft: #f7f9fc;
+      --text: #17212f;
+      --muted: #5d6b7c;
+      --line: #d6dee8;
+      --line-strong: #bdc8d5;
+      --brand: #744627;
+      --brand-2: #c16121;
+      --ok: #167245;
+      --bad: #b42318;
+      --shadow: 0 10px 28px rgba(23, 33, 47, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.45;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .page-header {
+      background: var(--brand);
+      color: #ffffff;
+      border-bottom: 4px solid var(--brand-2);
+    }
+
+    .header-inner,
+    main {
+      width: min(1500px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .header-inner {
+      padding: 22px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.2;
+    }
+
+    .header-meta {
+      margin: 6px 0 0;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 15px;
+    }
+
+    .json-link {
+      flex: 0 0 auto;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 6px;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    main {
+      padding: 24px 0 36px;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(160px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .metric {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .metric b {
+      display: block;
+      margin-top: 6px;
+      font-size: 30px;
+      line-height: 1;
+      color: #1f3a5f;
+    }
+
+    .metric .ok {
+      color: var(--ok);
+    }
+
+    .metric .bad {
+      color: var(--bad);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(170px, 220px) minmax(190px, 260px) 1fr auto;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 18px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    select,
+    input,
+    button {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      padding: 8px 11px;
+      font: 16px Arial, sans-serif;
+      color: var(--text);
+      background: #ffffff;
+    }
+
+    input:focus,
+    select:focus,
+    button:focus-visible {
+      outline: 3px solid rgba(193, 97, 33, 0.25);
+      border-color: var(--brand-2);
+    }
+
+    button {
+      cursor: pointer;
+      color: #ffffff;
+      background: var(--brand-2);
+      border-color: var(--brand-2);
+      font-weight: 700;
+    }
+
+    button:hover {
+      background: var(--brand);
+      border-color: var(--brand);
+    }
+
+    .table-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .table-toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel-soft);
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    col.number {
+      width: 5%;
+    }
+
+    col.status {
+      width: 10%;
+    }
+
+    col.category {
+      width: 15%;
+    }
+
+    col.question {
+      width: 30%;
+    }
+
+    col.actual {
+      width: 40%;
+    }
+
+    thead th {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line-strong);
+      background: #e9eef5;
+      color: #1f3a5f;
+      text-align: left;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    tbody td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      overflow-wrap: anywhere;
+      font-size: 15px;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fbfcfe;
+    }
+
+    tbody tr:hover {
+      background: #f1f5fa;
+    }
+
+    .status-label {
+      display: inline-flex;
+      min-width: 86px;
+      justify-content: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .status-label.passed {
+      color: var(--ok);
+      background: rgba(22, 114, 69, 0.1);
+    }
+
+    .status-label.failed {
+      color: var(--bad);
+      background: rgba(180, 35, 24, 0.1);
+    }
+
+    .empty {
+      padding: 28px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+
+    .load-error {
+      margin-top: 24px;
+      padding: 18px;
+      border: 1px solid rgba(180, 35, 24, 0.35);
+      border-radius: 8px;
+      background: #fff5f4;
+      color: var(--bad);
+      font-size: 18px;
+    }
+
+    code {
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: rgba(23, 33, 47, 0.08);
+      color: var(--text);
+    }
+
+    @media (max-width: 900px) {
+      .header-inner,
+      main {
+        width: min(100% - 24px, 1500px);
+      }
+
+      .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .summary {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      table {
+        min-width: 980px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .summary {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="page-header">
+    <div class="header-inner">
+      <div>
+        <h1>Тесты поиска ответа по вопросам</h1>
+        <p class="header-meta" id="generated-at">Загрузка отчёта...</p>
+      </div>
+      <a class="json-link" href="./report.json">Открыть JSON</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="summary" aria-label="Сводка">
+      <div class="metric">
+        <span>Всего</span>
+        <b id="total-count">0</b>
+      </div>
+      <div class="metric">
+        <span>Успешно</span>
+        <b class="ok" id="passed-count">0</b>
+      </div>
+      <div class="metric">
+        <span>Неуспешно</span>
+        <b class="bad" id="failed-count">0</b>
+      </div>
+      <div class="metric">
+        <span>Показано</span>
+        <b id="visible-count">0</b>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="Управление таблицей">
+      <select id="status-filter" aria-label="Фильтр по статусу">
+        <option value="all">Все тесты</option>
+        <option value="passed">Только успешные</option>
+        <option value="failed">Только неуспешные</option>
+      </select>
+
+      <select id="sort-by" aria-label="Сортировка">
+        <option value="number-asc">По номеру ↑</option>
+        <option value="number-desc">По номеру ↓</option>
+        <option value="passed-first">Сначала успешные</option>
+        <option value="failed-first">Сначала неуспешные</option>
+        <option value="category">По категории</option>
+        <option value="question">По вопросу</option>
+      </select>
+
+      <input id="search" type="search" placeholder="Поиск по вопросу, ответу или категории" aria-label="Поиск">
+
+      <button id="reset" type="button">Сбросить</button>
+    </section>
+
+    <section class="table-card">
+      <div class="table-toolbar">
+        <strong>Результаты тестов</strong>
+        <span id="failure-note"></span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <colgroup>
+            <col class="number">
+            <col class="status">
+            <col class="category">
+            <col class="question">
+            <col class="actual">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>Статус</th>
+              <th>Категория</th>
+              <th>Вопрос</th>
+              <th>Найденный ответ</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="empty" id="empty" hidden>Нет тестов под выбранные условия.</div>
+    </section>
+
+    <div class="load-error" id="load-error" hidden></div>
+  </main>
+
+  <script>
+    const state = {
+      report: null,
+      rows: [],
+    };
+
+    const elements = {
+      total: document.getElementById('total-count'),
+      passed: document.getElementById('passed-count'),
+      failed: document.getElementById('failed-count'),
+      visible: document.getElementById('visible-count'),
+      generatedAt: document.getElementById('generated-at'),
+      failureNote: document.getElementById('failure-note'),
+      statusFilter: document.getElementById('status-filter'),
+      sortBy: document.getElementById('sort-by'),
+      search: document.getElementById('search'),
+      reset: document.getElementById('reset'),
+      tbody: document.getElementById('tbody'),
+      empty: document.getElementById('empty'),
+      loadError: document.getElementById('load-error'),
+    };
+
+    init();
+
+    async function init() {
+      try {
+        const response = await fetch('./report.json', { cache: 'no-store' });
+
+        if (!response.ok) {
+          throw new Error('HTTP ' + response.status);
+        }
+
+        state.report = await response.json();
+        state.rows = state.report.results || [];
+        renderSummary();
+        applyFilters();
+        bindEvents();
+      } catch (error) {
+        showLoadError(error);
+      }
+    }
+
+    function bindEvents() {
+      elements.statusFilter.addEventListener('change', applyFilters);
+      elements.sortBy.addEventListener('change', applyFilters);
+      elements.search.addEventListener('input', applyFilters);
+      elements.reset.addEventListener('click', () => {
+        elements.statusFilter.value = 'all';
+        elements.sortBy.value = 'number-asc';
+        elements.search.value = '';
+        applyFilters();
+      });
+    }
+
+    function renderSummary() {
+      const report = state.report;
+      const generatedAt = report.generatedAt
+        ? new Date(report.generatedAt).toLocaleString('ru-RU')
+        : 'неизвестно';
+
+      elements.total.textContent = report.total;
+      elements.passed.textContent = report.passed;
+      elements.failed.textContent = report.failed;
+      elements.generatedAt.textContent = 'Сформировано: ' + generatedAt;
+      elements.failureNote.textContent = report.failed
+        ? 'Есть непрошедшие тесты: ' + report.failed
+        : 'Все тесты прошли';
+    }
+
+    function applyFilters() {
+      const status = elements.statusFilter.value;
+      const query = elements.search.value.trim().toLowerCase();
+
+      let rows = state.rows.filter((row) => {
+        if (status === 'passed' && !row.passed) return false;
+        if (status === 'failed' && row.passed) return false;
+        if (!query) return true;
+
+        return [row.category, row.question, row.actual]
+          .join(' ')
+          .toLowerCase()
+          .includes(query);
+      });
+
+      rows = sortRows(rows, elements.sortBy.value);
+      renderRows(rows);
+    }
+
+    function sortRows(rows, mode) {
+      return rows.slice().sort((a, b) => {
+        switch (mode) {
+          case 'number-desc':
+            return b.number - a.number;
+          case 'passed-first':
+            return Number(b.passed) - Number(a.passed) || a.number - b.number;
+          case 'failed-first':
+            return Number(a.passed) - Number(b.passed) || a.number - b.number;
+          case 'category':
+            return a.category.localeCompare(b.category, 'ru') || a.number - b.number;
+          case 'question':
+            return a.question.localeCompare(b.question, 'ru') || a.number - b.number;
+          default:
+            return a.number - b.number;
+        }
+      });
+    }
+
+    function renderRows(rows) {
+      elements.visible.textContent = rows.length;
+      elements.empty.hidden = rows.length !== 0;
+      elements.tbody.innerHTML = rows.map(renderRow).join('');
+    }
+
+    function renderRow(row) {
+      const statusClass = row.passed ? 'passed' : 'failed';
+      const statusText = row.passed ? 'Успешен' : 'Ошибка';
+
+      return `
+        <tr>
+          <td>${row.number}</td>
+          <td><span class="status-label ${statusClass}">${statusText}</span></td>
+          <td>${escapeHtml(row.category)}</td>
+          <td>${escapeHtml(row.question)}</td>
+          <td>${escapeHtml(row.actual)}</td>
+        </tr>
+      `;
+    }
+
+    function showLoadError(error) {
+      elements.generatedAt.textContent = 'Отчёт не загружен';
+      elements.loadError.hidden = false;
+      elements.loadError.innerHTML =
+        'Не удалось загрузить <code>report.json</code>. Запусти страницу через сервер: <code>node assets/js/test.js</code>. Ошибка: ' +
+        escapeHtml(error.message);
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;',
+        }[char];
+      });
+    }
+  </script>
+</body>
+
+</html>
