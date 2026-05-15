@@ -4,3 +4,10 @@
   border: 0;
   background: #231f20;
 }
+
+@media (max-width: 430px) {
+  .simulator-frame {
+    height: 68svh;
+    min-height: 420px;
+  }
+}

@@ -100,3 +100,59 @@ footer {
     margin: 8px 0;
   }
 }
+
+@media (max-width: 430px) {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    min-width: 320px;
+    padding: 0 10px;
+    background-attachment: scroll;
+  }
+
+  .content {
+    width: 100%;
+    min-height: 100svh;
+    padding: 14px 10px;
+    box-shadow: 0 0 45px 16px rgb(244, 246, 249);
+  }
+
+  .box {
+    width: 100%;
+    gap: 10px;
+    text-align: center;
+  }
+
+  header,
+  main,
+  footer {
+    min-height: auto;
+  }
+
+  h1 {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 17px;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  main img {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+  }
+
+  a {
+    overflow-wrap: anywhere;
+  }
+}

@@ -144,3 +144,56 @@
     width: 100%;
   }
 }
+
+@media (max-width: 430px) {
+  .dialog-panel {
+    width: 100%;
+  }
+
+  .dialog-label {
+    font-size: 16px;
+  }
+
+  #question-input {
+    min-height: 96px;
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .dialog-actions,
+  .dialog-examples {
+    gap: 8px;
+  }
+
+  .dialog-actions button,
+  .dialog-examples button {
+    min-height: 40px;
+    padding: 9px 10px;
+    font-size: 14px;
+    line-height: 1.25;
+  }
+
+  #answer-output {
+    min-height: 64px;
+    padding: 12px;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  #answer-output img {
+    max-height: none;
+  }
+
+  #question-history {
+    margin-left: 20px;
+  }
+
+  #question-history li,
+  .test-results {
+    font-size: 15px;
+  }
+
+  .test-results {
+    overflow-x: auto;
+  }
+}
