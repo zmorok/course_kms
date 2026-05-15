@@ -50,6 +50,84 @@ footer {
   align-items: center;
 }
 
+@media (min-width: 769px) and (max-width: 1600px) {
+  .content {
+    width: 48%;
+    box-shadow: 0 0 120px 38px rgb(244, 246, 249);
+  }
+
+  h1 {
+    font-size: 30px;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 21px;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 17px;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  main img {
+    width: auto;
+    max-width: 86%;
+    max-height: 42vh;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1366px),
+  (min-width: 769px) and (max-height: 800px) {
+  .content {
+    width: 56%;
+    box-shadow: 0 0 90px 28px rgb(244, 246, 249);
+  }
+
+  header {
+    height: 13vh;
+  }
+
+  main {
+    height: 58vh;
+  }
+
+  footer {
+    height: 11vh;
+  }
+
+  h1 {
+    font-size: 26px;
+    line-height: 1.15;
+  }
+
+  h2 {
+    font-size: 18px;
+    line-height: 1.22;
+  }
+
+  h3 {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+
+  main img {
+    width: auto;
+    max-width: 82%;
+    max-height: 36vh;
+    margin: 8px auto;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1100px) {
+  .content {
+    width: 70%;
+  }
+}
+
 @media (max-width: 768px) {
   body {
     background-attachment: scroll;

@@ -150,6 +150,117 @@
   vertical-align: top;
 }
 
+@media (min-width: 769px) and (max-width: 1600px) {
+  .dialog-panel {
+    max-width: 980px;
+  }
+
+  .dialog-form {
+    gap: 10px;
+  }
+
+  .dialog-label {
+    font-size: 18px;
+  }
+
+  #question-input {
+    min-height: 96px;
+    padding: 12px;
+    font-size: 18px;
+  }
+
+  .dialog-actions button {
+    min-height: 38px;
+    padding: 7px 12px;
+    font-size: 15px;
+  }
+
+  .dialog-question-list {
+    margin-top: 14px;
+  }
+
+  #question-select {
+    min-height: 40px;
+    font-size: 15px;
+  }
+
+  .answer-box,
+  .history-box {
+    margin-top: 18px;
+    padding-top: 14px;
+  }
+
+  #answer-output {
+    min-height: 64px;
+    padding: 12px;
+    font-size: 18px;
+  }
+
+  .answer-list li {
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1366px),
+  (min-width: 769px) and (max-height: 800px) {
+  .dialog-panel {
+    max-width: 900px;
+  }
+
+  .dialog-label {
+    font-size: 16px;
+  }
+
+  #question-input {
+    min-height: 78px;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .dialog-actions {
+    gap: 8px;
+  }
+
+  .dialog-actions button {
+    min-height: 34px;
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+
+  .dialog-question-list {
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  #question-select {
+    min-height: 36px;
+    padding: 7px 10px;
+    font-size: 14px;
+  }
+
+  .answer-box,
+  .history-box {
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+
+  #answer-output {
+    min-height: 56px;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .answer-list {
+    margin-left: 20px;
+  }
+
+  .answer-list li {
+    margin-bottom: 6px;
+    font-size: 16px;
+  }
+}
+
 @media (max-width: 768px) {
   #question-input {
     font-size: 16px;
