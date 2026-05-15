@@ -7,10 +7,10 @@
   <title>Диалог</title>
   <link rel="stylesheet" href="../assets/css/index.css" />
   <link rel="stylesheet" href="../assets/css/dialog.css" />
-  <script src="../assets/js/knowledge.js?v=2" defer></script>
-  <script src="../assets/js/endings.js?v=2" defer></script>
-  <script src="../assets/js/answer-engine.js?v=2" defer></script>
-  <script src="../assets/js/dialog.js?v=2" defer></script>
+  <script src="../assets/js/knowledge.js?v=3" defer></script>
+  <script src="../assets/js/endings.js?v=3" defer></script>
+  <script src="../assets/js/answer-engine.js?v=3" defer></script>
+  <script src="../assets/js/dialog.js?v=3" defer></script>
 </head>
 
 <body>
@@ -39,9 +39,16 @@
       </form>
 
       <div class="dialog-question-list">
-        <label class="dialog-label" for="question-select">Вопросы, которые можно задать</label>
-        <select id="question-select">
-          <option value="">Выберите вопрос из списка</option>
+        <label class="dialog-label" for="simple-question-select">Простые вопросы</label>
+        <select id="simple-question-select">
+          <option value="">Выберите простой вопрос</option>
+        </select>
+      </div>
+
+      <div class="dialog-question-list">
+        <label class="dialog-label" for="interesting-question-select">Интересные вопросы</label>
+        <select id="interesting-question-select">
+          <option value="">Выберите вопрос с изображением</option>
         </select>
       </div>
 

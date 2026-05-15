@@ -24,6 +24,20 @@ function getAnswerText(triad) {
 	return '<li>' + big(triad[0] + ' ' + triad[1] + ' ' + triad[2]) + '</li>'
 }
 
+function getKnowledgeBase() {
+	var base = []
+
+	if (typeof knowledge !== 'undefined' && Array.isArray(knowledge)) {
+		base = base.concat(knowledge)
+	}
+
+	if (typeof knowledgePhoto !== 'undefined' && Array.isArray(knowledgePhoto)) {
+		base = base.concat(knowledgePhoto)
+	}
+
+	return base
+}
+
 function clearQuestion(question) {
 	return question
 		.toLowerCase()
@@ -84,6 +98,7 @@ function questionContainsPredicate(question, predicate) {
 function getAnswer(question) {
 	var result = false
 	var answers = []
+	var knowledgeBase = getKnowledgeBase()
 
 	question = clearQuestion(question)
 
@@ -109,24 +124,24 @@ function getAnswer(question) {
 				var subject = new RegExp('.*' + subjectString + '.*', 'i')
 
 				// 1-й проход: ищем совпадение по сказуемому и подлежащему.
-				for (var j = 0; j < knowledge.length; j++) {
+				for (var j = 0; j < knowledgeBase.length; j++) {
 					if (
-						predicate.test(knowledge[j][1]) &&
-						(subject.test(knowledge[j][0]) || subject.test(knowledge[j][2]))
+						predicate.test(knowledgeBase[j][1]) &&
+						(subject.test(knowledgeBase[j][0]) || subject.test(knowledgeBase[j][2]))
 					) {
-						answers.push(getAnswerText(knowledge[j]))
+						answers.push(getAnswerText(knowledgeBase[j]))
 						result = true
 					}
 				}
 
 				// 2-й проход: если точного совпадения нет, ищем только по подлежащему.
 				if (result === false) {
-					for (var k = 0; k < knowledge.length; k++) {
+					for (var k = 0; k < knowledgeBase.length; k++) {
 						if (
-							subject.test(knowledge[k][0]) ||
-							subject.test(knowledge[k][2])
+							subject.test(knowledgeBase[k][0]) ||
+							subject.test(knowledgeBase[k][2])
 						) {
-							answers.push(getAnswerText(knowledge[k]))
+							answers.push(getAnswerText(knowledgeBase[k]))
 							result = true
 						}
 					}
@@ -136,12 +151,12 @@ function getAnswer(question) {
 	}
 
 	if (!result) {
-		for (var m = 0; m < knowledge.length; m++) {
+		for (var m = 0; m < knowledgeBase.length; m++) {
 			if (
-				questionContainsSubject(question, knowledge[m][0]) &&
-				questionContainsPredicate(question, knowledge[m][1])
+				questionContainsSubject(question, knowledgeBase[m][0]) &&
+				questionContainsPredicate(question, knowledgeBase[m][1])
 			) {
-				answers.push(getAnswerText(knowledge[m]))
+				answers.push(getAnswerText(knowledgeBase[m]))
 				result = true
 			}
 		}

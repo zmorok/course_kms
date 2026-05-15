@@ -1,4 +1,4 @@
-var dialogQuestions = [
+var dialogSimpleQuestions = [
 	'Чем является промышленный резак для бумаги?',
 	'Что режет промышленный резак?',
 	'Как резак режет материалы?',
@@ -11,7 +11,6 @@ var dialogQuestions = [
 	'Как работает привод?',
 	'Как работает измерительная система?',
 	'Как работает безопасность?',
-	'Где показан общий вид промышленного гильотинного резака?',
 	'В чём состоит главная задача резака?',
 	'Что разрезает резак?',
 	'Что выполняет резак?',
@@ -38,7 +37,6 @@ var dialogQuestions = [
 	'К чему перешли производители?',
 	'Что добавились к промышленным резакам?',
 	'Что добавилась к промышленным резакам?',
-	'Где показаны ранние конструкции бумагорезательных машин?',
 	'Где используются промышленные резаки?',
 	'Для чего типографии используют резак?',
 	'Для чего переплётные цеха используют резак?',
@@ -48,7 +46,6 @@ var dialogQuestions = [
 	'Что используют офисные центры?',
 	'Как работают меньшие модели резаков?',
 	'Чем являются меньшие модели резаков?',
-	'Где показана резка стопы бумаги?',
 	'Чем зафиксирован материал?',
 	'Как выполняется силовой рез?',
 	'Чем является основа резака?',
@@ -100,7 +97,6 @@ var dialogQuestions = [
 	'Что может повторять оператор?',
 	'Что снижает программирование реза?',
 	'Для чего важна память программ?',
-	'Где показана панель управления промышленного резака?',
 	'Чем является рабочий цикл гильотинного резака?',
 	'Что укладывает оператор?',
 	'По чему оператор выравнивает стопу?',
@@ -127,7 +123,6 @@ var dialogQuestions = [
 	'Что должен усвоить обучаемый?',
 	'Чем не является резак?',
 	'К чему приводит нарушение процедуры?',
-	'Где показан двуручный пуск?',
 	'На что рассчитан промышленный резак?',
 	'Что режет промышленный резак?',
 	'Что ухудшают слишком жёсткие материалы?',
@@ -153,13 +148,22 @@ var dialogQuestions = [
 	'Что закрепляет обучение?',
 ];
 
+var dialogInterestingQuestions = [
+	'Где показан общий вид промышленного гильотинного резака?',
+	'Где показаны ранние конструкции бумагорезательных машин?',
+	'Где показана резка стопы бумаги?',
+	'Где показана панель управления промышленного резака?',
+	'Где показан двуручный пуск?',
+];
+
 (function () {
 	var form = document.getElementById('question-form')
 	var input = document.getElementById('question-input')
 	var output = document.getElementById('answer-output')
 	var history = document.getElementById('question-history')
 	var clearButton = document.getElementById('clear-dialog')
-	var questionSelect = document.getElementById('question-select')
+	var simpleQuestionSelect = document.getElementById('simple-question-select')
+	var interestingQuestionSelect = document.getElementById('interesting-question-select')
 
 	function renderAnswer(question) {
 		var answer = getAnswer(question)
@@ -188,24 +192,45 @@ var dialogQuestions = [
 
 	clearButton.addEventListener('click', function () {
 		input.value = ''
-		questionSelect.value = ''
+		simpleQuestionSelect.value = ''
+		interestingQuestionSelect.value = ''
 		output.textContent = 'Ответ появится здесь.'
 		history.innerHTML = ''
 		input.focus()
 	})
 
-	if (typeof dialogQuestions !== 'undefined' && Array.isArray(dialogQuestions)) {
-		dialogQuestions.forEach(function (question) {
+	function fillQuestionSelect(select, questions) {
+		if (!select || !Array.isArray(questions)) {
+			return
+		}
+
+		questions.forEach(function (question) {
 			var option = document.createElement('option')
 			option.value = question
 			option.textContent = question
-			questionSelect.appendChild(option)
+			select.appendChild(option)
 		})
 	}
 
-	questionSelect.addEventListener('change', function () {
-		input.value = questionSelect.value
+	function selectQuestion(sourceSelect, targetSelect) {
+		input.value = sourceSelect.value
+
+		if (sourceSelect.value) {
+			targetSelect.value = ''
+		}
+
 		input.focus()
+	}
+
+	fillQuestionSelect(simpleQuestionSelect, dialogSimpleQuestions)
+	fillQuestionSelect(interestingQuestionSelect, dialogInterestingQuestions)
+
+	simpleQuestionSelect.addEventListener('change', function () {
+		selectQuestion(simpleQuestionSelect, interestingQuestionSelect)
+	})
+
+	interestingQuestionSelect.addEventListener('change', function () {
+		selectQuestion(interestingQuestionSelect, simpleQuestionSelect)
 	})
 
 })()
