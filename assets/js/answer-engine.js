@@ -20,6 +20,10 @@ function big(str) {
 	return str.substring(0, 1).toUpperCase() + str.substring(1)
 }
 
+function getAnswerText(triad) {
+	return '<li>' + big(triad[0] + ' ' + triad[1] + ' ' + triad[2]) + '</li>'
+}
+
 function clearQuestion(question) {
 	return question
 		.toLowerCase()
@@ -28,9 +32,58 @@ function clearQuestion(question) {
 		.trim()
 }
 
+function getMeaningfulWords(value) {
+	var stopWords = [
+		'что',
+		'чем',
+		'где',
+		'как',
+		'когда',
+		'куда',
+		'кто',
+		'каким',
+		'какая',
+		'какой',
+		'какие',
+		'для',
+		'при',
+		'под',
+		'над',
+		'перед',
+		'после',
+		'через',
+	]
+
+	return clearQuestion(String(value).replace(/<[^>]+>/g, ' '))
+		.split(' ')
+		.filter(function (word) {
+			return word.length > 2 && stopWords.indexOf(word) === -1
+		})
+}
+
+function questionContainsSubject(question, subject) {
+	var subjectWords = getMeaningfulWords(subject)
+
+	if (subjectWords.length === 0) {
+		return false
+	}
+
+	return subjectWords.every(function (word) {
+		return question.indexOf(word) !== -1
+	})
+}
+
+function questionContainsPredicate(question, predicate) {
+	var predicateWords = getMeaningfulWords(predicate)
+
+	return predicateWords.some(function (word) {
+		return question.indexOf(word) !== -1
+	})
+}
+
 function getAnswer(question) {
 	var result = false
-	var answer = ''
+	var answers = []
 
 	question = clearQuestion(question)
 
@@ -61,14 +114,7 @@ function getAnswer(question) {
 						predicate.test(knowledge[j][1]) &&
 						(subject.test(knowledge[j][0]) || subject.test(knowledge[j][2]))
 					) {
-						answer += big(
-							knowledge[j][0] +
-								' ' +
-								knowledge[j][1] +
-								' ' +
-								knowledge[j][2] +
-								'. ',
-						)
+						answers.push(getAnswerText(knowledge[j]))
 						result = true
 					}
 				}
@@ -80,14 +126,7 @@ function getAnswer(question) {
 							subject.test(knowledge[k][0]) ||
 							subject.test(knowledge[k][2])
 						) {
-							answer += big(
-								knowledge[k][0] +
-									' ' +
-									knowledge[k][1] +
-									' ' +
-									knowledge[k][2] +
-									'. ',
-							)
+							answers.push(getAnswerText(knowledge[k]))
 							result = true
 						}
 					}
@@ -97,8 +136,20 @@ function getAnswer(question) {
 	}
 
 	if (!result) {
-		answer = 'Ответ не найден.'
+		for (var m = 0; m < knowledge.length; m++) {
+			if (
+				questionContainsSubject(question, knowledge[m][0]) &&
+				questionContainsPredicate(question, knowledge[m][1])
+			) {
+				answers.push(getAnswerText(knowledge[m]))
+				result = true
+			}
+		}
 	}
 
-	return answer
+	if (!result) {
+		return 'Ответ не найден.'
+	}
+
+	return '<ul class="answer-list">' + answers.join('') + '</ul>'
 }

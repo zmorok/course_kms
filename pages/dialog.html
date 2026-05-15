@@ -7,10 +7,10 @@
   <title>Диалог</title>
   <link rel="stylesheet" href="../assets/css/index.css" />
   <link rel="stylesheet" href="../assets/css/dialog.css" />
-  <script src="../assets/js/knowledge.js" defer></script>
-  <script src="../assets/js/endings.js" defer></script>
-  <script src="../assets/js/answer-engine.js" defer></script>
-  <script src="../assets/js/dialog.js" defer></script>
+  <script src="../assets/js/knowledge.js?v=2" defer></script>
+  <script src="../assets/js/endings.js?v=2" defer></script>
+  <script src="../assets/js/answer-engine.js?v=2" defer></script>
+  <script src="../assets/js/dialog.js?v=2" defer></script>
 </head>
 
 <body>
@@ -38,13 +38,11 @@
         </div>
       </form>
 
-      <div class="dialog-examples" aria-label="Примеры вопросов">
-        <button type="button" data-question="Что является промышленный резак для бумаги?">Что является промышленный
-          резак для бумаги?</button>
-        <button type="button" data-question="Что выполняет резак?">Что выполняет резак?</button>
-        <button type="button" data-question="Где используется промышленный резак?">Где используется промышленный
-          резак?</button>
-        <button type="button" data-question="Что фиксирует прижим?">Что фиксирует прижим?</button>
+      <div class="dialog-question-list">
+        <label class="dialog-label" for="question-select">Вопросы, которые можно задать</label>
+        <select id="question-select">
+          <option value="">Выберите вопрос из списка</option>
+        </select>
       </div>
 
       <section class="answer-box" id="answer-box" aria-live="polite">

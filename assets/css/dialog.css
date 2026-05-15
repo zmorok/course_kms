@@ -33,15 +33,13 @@
   border-color: rgb(193, 97, 33);
 }
 
-.dialog-actions,
-.dialog-examples {
+.dialog-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-.dialog-actions button,
-.dialog-examples button {
+.dialog-actions button {
   min-height: 42px;
   padding: 8px 14px;
   border: 0;
@@ -59,17 +57,26 @@
   background: rgb(116, 70, 39);
 }
 
-.dialog-examples {
+.dialog-question-list {
+  display: grid;
+  gap: 8px;
   margin-top: 18px;
 }
 
-.dialog-examples button {
+#question-select {
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid #c9d1dc;
+  border-radius: 6px;
   color: #1f3a5f;
-  background: #e9eef5;
+  background: #fff;
+  font: 700 16px/1.25 Arial, sans-serif;
 }
 
-.dialog-examples button:hover {
-  background: #d7e0ec;
+#question-select:focus {
+  outline: 3px solid rgba(193, 97, 33, 0.25);
+  border-color: rgb(193, 97, 33);
 }
 
 .answer-box,
@@ -95,6 +102,15 @@
 
 #answer-output img {
   max-height: 320px;
+}
+
+.answer-list {
+  margin: 0 0 0 22px;
+}
+
+.answer-list li {
+  margin-bottom: 10px;
+  font-size: 20px;
 }
 
 #question-history {
@@ -139,8 +155,7 @@
     font-size: 16px;
   }
 
-  .dialog-actions button,
-  .dialog-examples button {
+  .dialog-actions button {
     width: 100%;
   }
 }
@@ -161,16 +176,19 @@
   }
 
   .dialog-actions,
-  .dialog-examples {
+  .dialog-question-list {
     gap: 8px;
   }
 
-  .dialog-actions button,
-  .dialog-examples button {
+  .dialog-actions button {
     min-height: 40px;
     padding: 9px 10px;
     font-size: 14px;
     line-height: 1.25;
+  }
+
+  #question-select {
+    font-size: 14px;
   }
 
   #answer-output {
@@ -182,6 +200,10 @@
 
   #answer-output img {
     max-height: none;
+  }
+
+  .answer-list li {
+    font-size: 16px;
   }
 
   #question-history {
