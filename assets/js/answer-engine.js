@@ -127,7 +127,8 @@ function getAnswer(question) {
 				for (var j = 0; j < knowledgeBase.length; j++) {
 					if (
 						predicate.test(knowledgeBase[j][1]) &&
-						(subject.test(knowledgeBase[j][0]) || subject.test(knowledgeBase[j][2]))
+						(subject.test(knowledgeBase[j][0]) ||
+							subject.test(knowledgeBase[j][2]))
 					) {
 						answers.push(getAnswerText(knowledgeBase[j]))
 						result = true
