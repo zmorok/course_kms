@@ -1,0 +1,322 @@
+.dialog {
+  position: fixed;
+  top: 15%;
+  right: 0;
+  z-index: 12000;
+  width: min(720px, calc(100vw - 48px));
+  height: min(78vh, 760px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  border: 1px solid rgba(116, 70, 39, 0.35);
+  border-right: 0;
+  border-radius: 8px 0 0 8px;
+  background: #ffffff;
+  box-shadow: 0 18px 45px rgba(31, 58, 95, 0.25);
+  color: #222;
+  font-family: Arial, sans-serif;
+  transform: translateX(100%);
+  transition: transform 0.35s ease;
+  will-change: transform;
+}
+
+.dialog.is-open {
+  transform: translateX(0);
+}
+
+.dialog .label {
+  position: absolute;
+  top: 50%;
+  left: -142px;
+  width: 248px;
+  min-height: 34px;
+  box-sizing: border-box;
+  padding: 7px 14px;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  border-radius: 8px 8px 0 0;
+  background: rgb(193, 97, 33);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dialog .header {
+  margin-bottom: 12px;
+  color: #1f3a5f;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.dialog .history {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-bottom: 12px;
+  padding: 12px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid #d9dfe8;
+  border-radius: 8px;
+  background: #f7f9fc;
+}
+
+.dialog .history .question,
+.dialog .history .answer {
+  max-width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.dialog .history .question {
+  margin-left: auto;
+  background: rgba(193, 97, 33, 0.14);
+  border: 1px solid rgba(193, 97, 33, 0.25);
+}
+
+.dialog .history .answer {
+  margin-right: auto;
+  background: #ffffff;
+  border: 1px solid #d9dfe8;
+}
+
+.dialog .history .answer img,
+.dialog .history .answer audio,
+.dialog .history .answer video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 10px auto;
+  cursor: pointer;
+}
+
+.dialog>.question {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.dialog input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 42px;
+  width: auto;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid #bdc8d5;
+  border-radius: 6px;
+  font-size: 18px;
+}
+
+.dialog input:focus {
+  outline: 3px solid rgba(193, 97, 33, 0.25);
+  border-color: rgb(193, 97, 33);
+}
+
+.dialog button {
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: rgb(193, 97, 33);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dialog button:hover {
+  background: rgb(116, 70, 39);
+}
+
+.dialog .microphone-button {
+  background: #1f3a5f;
+  white-space: nowrap;
+}
+
+.dialog .microphone-input {
+  flex: 0 0 44px;
+  padding: 8px;
+  color: transparent;
+  text-indent: -9999px;
+  caret-color: transparent;
+  background-position: center !important;
+  cursor: pointer;
+}
+
+.dialog .microphone-input[readonly] {
+  cursor: pointer;
+}
+
+.dialog .microphone-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.dialog button:disabled {
+  cursor: default;
+  opacity: 0.65;
+}
+
+@media (max-width: 768px) {
+  .dialog {
+    top: 18px;
+    bottom: 18px;
+    right: 0;
+    width: calc(100vw - 54px);
+    height: auto;
+    padding: 14px;
+    transform: translateX(100%);
+  }
+
+  .dialog.is-open {
+    transform: translateX(0);
+  }
+
+  .dialog .label {
+    left: -142px;
+    font-size: 14px;
+  }
+
+  .dialog .header {
+    margin-bottom: 8px;
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .dialog .history {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+
+  .dialog .history .question,
+  .dialog .history .answer {
+    max-width: 100%;
+    padding: 8px 10px;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .dialog>.question {
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    gap: 8px;
+  }
+
+  .dialog input,
+  .dialog button {
+    width: 100%;
+    min-height: 40px;
+    font-size: 15px;
+  }
+
+  .dialog .microphone-input {
+    width: 44px;
+    min-width: 44px;
+  }
+
+  .dialog>.question button {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 430px) {
+  .dialog {
+    top: 14px;
+    bottom: 14px;
+    right: 0;
+    width: calc(100vw - 50px);
+    height: auto;
+    max-height: none;
+    padding: 12px;
+    border-radius: 8px 0 0 8px;
+    transform: translateX(100%);
+  }
+
+  .dialog.is-open {
+    transform: translateX(0);
+  }
+
+  .dialog .label {
+    top: 50%;
+    left: -142px;
+    width: 252px;
+    min-height: 32px;
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .dialog .header {
+    margin-bottom: 8px;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .dialog .history {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-bottom: 8px;
+    padding: 8px;
+  }
+
+  .dialog .history .question,
+  .dialog .history .answer {
+    max-width: 100%;
+    padding: 8px 9px;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .dialog>.question {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    gap: 8px;
+  }
+
+  .dialog input,
+  .dialog button {
+    width: 100%;
+    min-height: 40px;
+    font-size: 15px;
+  }
+
+  .dialog .microphone-input {
+    width: 44px;
+    min-width: 44px;
+  }
+
+  .dialog>.question button {
+    grid-column: 1 / -1;
+  }
+
+  .dialog .history .answer img,
+  .dialog .history .answer audio,
+  .dialog .history .answer video {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 430px) and (orientation: landscape) {
+  .dialog {
+    top: 10px;
+    bottom: 10px;
+  }
+
+  .dialog .history {
+    min-height: 0;
+  }
+}
