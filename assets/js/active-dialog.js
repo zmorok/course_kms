@@ -1,4 +1,5 @@
 var dialogOn = false
+var yandexSpeechkitAlertShown = false
 
 function dialog_window() {
 	if (document.getElementById('dialog')) {
@@ -94,7 +95,7 @@ function initSpeechInput(input) {
 		return
 	}
 
-	var apiKey = getSpeechkitApiKey()
+	var apiKey = 'AQVN2qTAw0xo4oqc859JgLWEBBffc93Qz_HR9nII'
 
 	if (apiKey) {
 		waitForYandexSpeechkit(function (isReady) {
@@ -105,6 +106,7 @@ function initSpeechInput(input) {
 
 			voiceInput.readOnly = true
 			voiceInput.placeholder = 'Микрофон недоступен'
+			showYandexSpeechkitLoadAlert()
 		})
 		return
 	}
@@ -113,17 +115,27 @@ function initSpeechInput(input) {
 	voiceInput.placeholder = 'Нет API-ключа'
 }
 
-function getSpeechkitApiKey() {
-	return window.YANDEX_SPEECHKIT_API_KEY || ''
+function showYandexSpeechkitLoadAlert() {
+	if (yandexSpeechkitAlertShown) {
+		return
+	}
+
+	yandexSpeechkitAlertShown = true
+	window.alert(
+		'Библиотека Yandex SpeechKit для голосового ввода не загрузилась. ' +
+			'Отключите блокировщики рекламы/скриптов для этой страницы и обновите сайт.',
+	)
 }
 
 function waitForYandexSpeechkit(callback, attempt) {
 	var currentAttempt = attempt || 0
 	var isReady =
-		window.ya &&
-		ya.speechkit &&
-		ya.speechkit.Textline &&
-		ya.speechkit.settings
+		window.ya && ya.speechkit && ya.speechkit.Textline && ya.speechkit.settings
+
+	if (window.yandexSpeechkitLoadFailed) {
+		callback(false)
+		return
+	}
 
 	if (isReady) {
 		callback(true)
