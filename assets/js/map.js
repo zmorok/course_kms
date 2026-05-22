@@ -165,7 +165,6 @@ function speak(id) {
 function onZoneClick(zone) {
 	hud.innerHTML = `<b>${zone.label}</b> <br><br> <p>${zone.desc}</p>`
 	speak(zone.id)
-	//console.log('Clicked zone:', zone)
 }
 
 function render() {

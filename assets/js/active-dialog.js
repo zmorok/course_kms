@@ -20,6 +20,8 @@ function dialog_window() {
 			'</div>',
 	)
 
+	prepareDialogPosition()
+
 	var input = document.getElementById('Qdialog')
 	input.addEventListener('keydown', function (event) {
 		if (event.key === 'Enter') {
@@ -31,22 +33,48 @@ function dialog_window() {
 	initSpeechInput(input)
 }
 
-function openDialog() {
-	var dialog = document.getElementById('dialog')
+function prepareDialogPosition() {
+	var $dialog = $('#dialog')
 
-	if (!dialog) {
+	$dialog.stop(true, true).css({
+		right: -$dialog.outerWidth(),
+	})
+
+	$(window).on('resize.activeDialog', function () {
+		if (!dialogOn) {
+			$dialog.css('right', -$dialog.outerWidth())
+		}
+	})
+}
+
+function openDialog() {
+	var $dialog = $('#dialog')
+
+	if (!$dialog.length) {
 		return
 	}
 
+	$dialog.stop(true, false)
+
 	if (dialogOn) {
-		dialog.classList.remove('is-open')
-		dialog.setAttribute('aria-hidden', 'true')
+		$dialog.animate(
+			{
+				right: -$dialog.outerWidth(),
+			},
+			350,
+		)
+		$dialog.attr('aria-hidden', 'true')
 		dialogOn = false
 		return
 	}
 
-	dialog.classList.add('is-open')
-	dialog.setAttribute('aria-hidden', 'false')
+	$dialog.animate(
+		{
+			right: 0,
+		},
+		350,
+	)
+	$dialog.attr('aria-hidden', 'false')
 	dialogOn = true
 }
 
